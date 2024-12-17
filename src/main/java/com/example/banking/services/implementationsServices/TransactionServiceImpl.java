@@ -57,4 +57,13 @@ public class TransactionServiceImpl implements TransactionService {
     public int getTransactionMultiplier(TransactionType type) {
         return TransactionType.TRANSFERT == type ? -1:1 ;
     }
+
+    @Override
+    public Set<TransactionDto> findAllByUserId(Integer id) {
+        return transactionRepository
+                .findAllByUserId(id)
+                .stream()
+                .map(TransactionDto::fromEntity)
+                .collect(Collectors.toSet());
+    }
 }

@@ -4,6 +4,7 @@ import com.example.banking.DTO.AccountDto;
 import com.example.banking.Repositories.AccountRepository;
 import com.example.banking.entities.Account;
 import com.example.banking.helpers.ObjectValidator;
+import com.example.banking.helpers.OperationNonPermittedException;
 import com.example.banking.services.AccountService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,15 @@ public class AccountServiceImpl implements AccountService {
     public Integer save(AccountDto objDto) {
         validator.validate(objDto);
         Account account = AccountDto.toEntity(objDto);
+        boolean userAlreadyAnAccount=accountRepository.findByUserId(account.getUser().getId()).isPresent();
+        if(userAlreadyAnAccount){
+             throw new OperationNonPermittedException(
+                  "the selected user has alread an active account",
+                  "create account save()",
+                  "AccountServiceImpl",
+                  "Account creation"
+             );
+        }
         // todo genrete random Iban
         account.setIban(generateRandomIban());
         return accountRepository.save(account).getId();

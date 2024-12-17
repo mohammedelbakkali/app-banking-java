@@ -43,4 +43,13 @@ public class ContactServiceImpl implements ContactService {
     public void delete(Integer id) {
         // todo check before delete
     }
+
+    @Override
+    public Set<ContactDto> findAllByUserId(Integer id) {
+        return contactRepository
+                .findAllByUserId(id)
+                .stream()
+                .map(ContactDto::fromEntity)
+                .collect(Collectors.toSet());
+    }
 }

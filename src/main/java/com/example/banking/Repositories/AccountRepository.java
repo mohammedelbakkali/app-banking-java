@@ -11,5 +11,6 @@ public interface AccountRepository extends JpaRepository<Account,Integer> {
     //Spring Data pattern SDP
 
     Optional<Account> findByIban(String iban);
+    Optional<Account> findByUserId(Integer id);
 
 }
