@@ -20,9 +20,7 @@ import java.io.Serializable;
 @Setter
 public class AccountDto implements Serializable {
     private Integer id;
-    @NotBlank
-    @NotEmpty
-    @NotNull
+
     String iban;
     private UserDto user;
 

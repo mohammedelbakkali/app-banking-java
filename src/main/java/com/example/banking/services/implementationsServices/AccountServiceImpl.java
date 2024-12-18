@@ -23,22 +23,35 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final ObjectValidator<AccountDto> validator;
     @Override
+
     public Integer save(AccountDto objDto) {
+        // Valider les données d'entrée
         validator.validate(objDto);
+
+        // Convertir DTO en entité
         Account account = AccountDto.toEntity(objDto);
-        boolean userAlreadyAnAccount=accountRepository.findByUserId(account.getUser().getId()).isPresent();
-        if(userAlreadyAnAccount){
-             throw new OperationNonPermittedException(
-                  "the selected user has alread an active account",
-                  "create account save()",
-                  "AccountServiceImpl",
-                  "Account creation"
-             );
+
+        // Vérifiez si l'utilisateur existe déjà
+        boolean userAlreadyAnAccount = accountRepository.findByUserId(account.getUser().getId()).isPresent();
+        if (userAlreadyAnAccount) {
+            throw new OperationNonPermittedException(
+                    "The selected user already has an active account",
+                    "create account save()",
+                    "AccountServiceImpl",
+                    "Account creation"
+            );
         }
-        // todo genrete random Iban
+
+        // Vérifiez si l'utilisateur référencé est persistant
+
+
+        // Générer un IBAN aléatoire (TODO à implémenter)
         account.setIban(generateRandomIban());
-        return accountRepository.save(account).getId();
+        Account savedAccount = accountRepository.save(account);
+        // Sauvegarder l'entité
+        return savedAccount.getId();
     }
+
 
 
 

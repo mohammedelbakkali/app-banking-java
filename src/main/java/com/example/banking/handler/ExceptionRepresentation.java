@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
 @AllArgsConstructor
+@Getter
 @JsonInclude(Include.NON_EMPTY)
 public class ExceptionRepresentation {
     private String errorMessage;

@@ -1,5 +1,6 @@
 package com.example.banking.handler;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -52,7 +53,7 @@ public class GlobalExceptionHandler {
     ExceptionRepresentation representation = 
         ExceptionRepresentation.
         builder()
-        .errorMessage(exception.getMessage())
+        .errorMessage(exception.getErrorMessage())
         .build();
 
         return ResponseEntity
@@ -62,5 +63,19 @@ public class GlobalExceptionHandler {
    }
 
 
+   @ExceptionHandler(DataIntegrityViolationException.class)
+
+   public ResponseEntity<ExceptionRepresentation> handlerException(DataIntegrityViolationException exception){
+       ExceptionRepresentation representation =
+               ExceptionRepresentation.
+                       builder()
+                       .errorMessage("A user already exists whith the provided Email")
+                       .build();
+
+       return ResponseEntity
+               .status(HttpStatus.BAD_REQUEST) // 406
+               .body(representation)
+               ;
+   }
 
 }

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 public class UserDto {
+    private Integer id;
     @NotNull(message = "FIRSTNAME_CANNOT_BE_NULL")
     @NotEmpty(message = "FIRSTNAME_CANNOT_BE_EMPTY")
     @NotBlank(message = "FIRSTNAME_CANNOT_BE_BLANK")
@@ -27,6 +28,7 @@ public class UserDto {
     @NotEmpty(message = "EMAIL_CANNOT_BE_EMPTY")
     @NotBlank(message = "EMAIL_CANNOT_BE_BLANK")
     @Email(message = "EMAIL_NOT_VALID")
+
     private String email;
     @NotNull
     @NotEmpty
@@ -41,6 +43,7 @@ public class UserDto {
 
     public static User toEntity(UserDto userDto){
          return User.builder()
+                 .id(userDto.getId())
                  .firsName(userDto.getFirsName())
                  .lastName(userDto.getLastName())
                  .email(userDto.getEmail())
@@ -51,6 +54,7 @@ public class UserDto {
 
     public static UserDto fromEntity(User user){
         return  builder()
+                .id(user.getId())
                 .firsName(user.getFirsName())
                 .lastName(user.getLastName())
                 .address(AddressDto.fromEntity(user.getAddress()))

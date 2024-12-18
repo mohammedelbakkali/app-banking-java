@@ -24,9 +24,9 @@ public class AbstractEntity {
     private Integer id;
     @CreatedDate
     @Column(
-            name = "createdDate",
-            nullable = false,
-            updatable = false
+            name = "createdDate"
+        //     nullable = false,
+        //     updatable = false
     )
     private LocalDateTime createdDate;
     @LastModifiedDate

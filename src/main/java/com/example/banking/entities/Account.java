@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Account extends AbstractEntity{
 
     private String iban;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_user")
     private User user;
 }

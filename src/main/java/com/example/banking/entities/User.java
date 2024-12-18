@@ -20,6 +20,7 @@ public class User extends AbstractEntity{
 
     private String firsName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
     private boolean active;
@@ -37,7 +38,7 @@ public class User extends AbstractEntity{
     @OneToMany(mappedBy = "user")
     private Collection<Transaction> trasanctions;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Account account;
 
 

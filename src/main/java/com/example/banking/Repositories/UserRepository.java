@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User,Integer> {
+    boolean existsByEmailAndIdNot(String email, Integer id);
+
     // SELECT * FROM user WHERE firstname = "mohammed" AND lastname = "bakkali"
     List<User> findAllByFirsNameAndLastName(String lastName,String firstName);
     // SELECT * FROM user WHERE firstname like "%mohammed%"
